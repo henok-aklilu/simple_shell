@@ -1,8 +1,7 @@
-<body
+<body>
 <h1> 0x16. C - Simple Shell</h1>
-
-  <div data-react-class="tags/Tags" data-react-props="{&quot;tags&quot;:[{&quot;id&quot;:7,&quot;value&quot;:&quot;C&quot;,&quot;author_id&quot;:null,&quot;created_at&quot;:&quot;2022-06-16T01:59:38.000Z&quot;,&quot;updated_at&quot;:&quot;2022-06-16T01:59:38.000Z&quot;},{&quot;id&quot;:16,&quot;value&quot;:&quot;Group project&quot;,&quot;author_id&quot;:null,&quot;created_at&quot;:&quot;2022-06-16T01:59:38.000Z&quot;,&quot;updated_at&quot;:&quot;2022-06-16T01:59:38.000Z&quot;},{&quot;id&quot;:20,&quot;value&quot;:&quot;Syscall&quot;,&quot;author_id&quot;:null,&quot;created_at&quot;:&quot;2022-06-16T01:59:38.000Z&quot;,&quot;updated_at&quot;:&quot;2022-06-16T01:59:38.000Z&quot;}]}" data-react-cache-id="tags/Tags-0"><div class="align-items-center d-flex flex-wrap gap-3 my-2"><span class="label label-primary" style="font-size: 14px;">C</span><span class="label label-primary" style="font-size: 14px;">Group project</span><span class="label label-primary" style="font-size: 14px;">Syscall</span></div></div>
-
+<h1>Group project</h1>
+  
   <div data-react-class="projects/ProjectMetadata" data-react-props="{&quot;metadata&quot;:{&quot;author&quot;:&quot;Julien Barbier&quot;,&quot;weight&quot;:10,&quot;correction&quot;:{&quot;released&quot;:false,&quot;auto_correction_available_at&quot;:&quot;2023-02-22T01:12:00.000+03:00&quot;,&quot;requires_auto_correction&quot;:true,&quot;requires_manual_correction&quot;:false},&quot;bpi&quot;:{&quot;current&quot;:true,&quot;started&quot;:false,&quot;in_second_deadline&quot;:false,&quot;starts_at&quot;:&quot;2023-02-08T06:00:00.000+03:00&quot;,&quot;ends_at&quot;:&quot;2023-02-23T06:00:00.000+03:00&quot;,&quot;second_deadline_at&quot;:&quot;2023-02-25T06:00:00.000+03:00&quot;},&quot;team&quot;:{&quot;in_team_of&quot;:2,&quot;members&quot;:[&quot;Yoseph Tamirat&quot;,&quot;Henok Aklilu&quot;]}}}" data-react-cache-id="projects/ProjectMetadata-0"><ul class="list-group metadata" id="project-metadata"><li class="list-group-item"><i aria-hidden="true" class="fa fa-user fa-fw"></i> By: Julien Barbier</li><li class="list-group-item"><i aria-hidden="true" class="fa fa-cog fa-fw"></i> Weight: 10</li><li class="list-group-item"><i aria-hidden="true" class="fa fa-users fa-fw"></i> Project to be done in teams of 2 people (your team: Yoseph Tamirat, Henok Aklilu)</li><li class="list-group-item"><i aria-hidden="true" class="fa fa-calendar fa-fw"></i> Project will start <span data-container="body" data-html="false" data-placement="auto top" data-toggle="tooltip" title="" data-original-title="2023-02-08 06:00 (GMT+03:00)"><span class="datetime">Feb 8, 2023 6:00 AM</span></span>, must end by <span data-container="body" data-html="false" data-placement="auto top" data-toggle="tooltip" title="" data-original-title="2023-02-23 06:00 (GMT+03:00)"><span class="datetime">Feb 23, 2023 6:00 AM</span></span></li><li class="list-group-item"><i aria-hidden="true" class="fa fa-check fa-fw"></i> Checker will be released at <span data-container="body" data-html="false" data-placement="auto top" data-toggle="tooltip" title="" data-original-title="2023-02-22 01:12 (GMT+03:00)"><span class="datetime">Feb 22, 2023 1:12 AM</span></span></li><li class="list-group-item"><i aria-hidden="true" class="fa fa-check-square fa-fw"></i> An auto review will be launched at the deadline</li></ul></div>
 <div id="project_id" style="display: none" data-project-id="235"></div>  
 
@@ -54,16 +53,6 @@
 <li>How to suspend the execution of a process until one of its children terminates</li>
 <li>What is <code>EOF</code> / “end-of-file”?</li>
 </ul>
-
-<h3>Copyright - Plagiarism</h3>
-
-<ul>
-<li>You are tasked to come up with solutions for the tasks below yourself to meet with the above learning objectives.</li>
-<li>You will not be able to meet the objectives of this or any following project by copying and pasting someone else’s work. </li>
-<li>You are not allowed to publish any content of this project.</li>
-<li>Any form of plagiarism is strictly forbidden and will result in removal from the program.</li>
-</ul>
-
 <h2>Requirements</h2>
 
 <h3>General</h3>
@@ -81,10 +70,6 @@
 <li>Write a <code>README</code> with the description of your project</li>
 <li>You should have an <code>AUTHORS</code> file at the root of your repository, listing all individuals having contributed content to the repository. Format, see <a href="/rltoken/UL8J3kgl7HBK_Z9iBL3JFg" title="Docker" target="_blank">Docker</a></li>
 </ul>
-
-<h3>GitHub</h3>
-
-<p>*<em>There should be one project repository per group. If you and your partner have a repository with the same name in both your accounts, you risk a 0% score. Add your partner as a collaborator. *</em></p>
 
 <h2>More Info</h2>
 
@@ -205,18 +190,11 @@ We <strong>strongly</strong> encourage the entire class to work together to crea
   <span id="user_id" data-id="198536"></span>
 
   <div class="panel-heading panel-heading-actions">
-    <h3 class="panel-title">
-      0. Betty would be proud
-    </h3>
-
-  
-    <h3 class="panel-title">
-      1. Simple shell 0.1
-    </h3>
-
     
-    <!-- Task Body -->
+      0. Betty would be proud
+    
+      1. Simple shell 0.1
     <p>Write a UNIX command line interpreter.</p>
 
 
-<div id="torrent-scanner-popup" style="display: none;"></div></body>
+</body>
