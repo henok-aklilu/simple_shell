@@ -177,24 +177,104 @@ We <strong>strongly</strong> encourage the entire class to work together to crea
   </div>
 </div>
 
+      <h1 class="gap">Tasks</h1>
+      <h1> 0. Betty would be proud </h1>
+      <p>Write a beautiful code that passes the Betty checks</p>
 
-      
+    <p> Write a UNIX command line interpreter.</p>
 
-      
+<ul>
+<li>Usage: <code>simple_shell</code></li>
+</ul>
 
-        
-          <h2 class="gap">Tasks</h2>
+<p>Your Shell should:</p>
 
-    <div data-role="task1033" data-position="1" id="task-num-0">
-      <div class="panel panel-default task-card " id="task-1033">
-  <span id="user_id" data-id="198536"></span>
+<ul>
+<li>Display a prompt and wait for the user to type a command. A command line always ends with a new line.</li>
+<li>The prompt is displayed again each time a command has been executed.</li>
+<li>The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.</li>
+<li>The command lines are made only of one word. No arguments will be passed to programs.</li>
+<li>If an executable cannot be found, print an error message and display the prompt again.</li>
+<li>Handle errors.</li>
+<li>You have to handle the “end of file” condition (<code>Ctrl+D</code>)</li>
+</ul>
 
-  <div class="panel-heading panel-heading-actions">
-    
-      0. Betty would be proud
-    
-      1. Simple shell 0.1
+<p>You don’t have to:</p>
+
+<ul>
+<li>use the <code>PATH</code></li>
+<li>implement built-ins</li>
+<li>handle special characters : <code>"</code>, <code>'</code>, <code>`</code>, <code>\</code>, <code>*</code>, <code>&amp;</code>, <code>#</code></li>
+<li>be able to move the cursor</li>
+<li>handle commands with arguments</li>
+</ul>
+
+<p><em><code>execve</code> will be the core part of your Shell, don’t forget to pass the environ to it…</em></p>
+
+<pre><code>julien@ubuntu:~/shell$ ./shell 
+#cisfun$ ls
+./shell: No such file or directory
+#cisfun$ /bin/ls
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
+#cisfun$ /bin/ls -l
+./shell: No such file or directory
+#cisfun$ ^[[D^[[D^[[D
+./shell: No such file or directory
+#cisfun$ ^[[C^[[C^[[C^[[C
+./shell: No such file or directory
+#cisfun$ exit
+./shell: No such file or directory
+#cisfun$ ^C
+julien@ubuntu:~/shell$ echo "/bin/ls" | ./shell
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
+#cisfun$ julien@ubuntu:~/shell$
+</code></pre>
+
+  </div>
     <p>Write a UNIX command line interpreter.</p>
+    <li>Usage: <code>simple_shell</code></li>
+    <p>Your Shell should:</p>
+    <ul>
+<li>Display a prompt and wait for the user to type a command. A command line always ends with a new line.</li>
+<li>The prompt is displayed again each time a command has been executed.</li>
+<li>The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.</li>
+<li>The command lines are made only of one word. No arguments will be passed to programs.</li>
+<li>If an executable cannot be found, print an error message and display the prompt again.</li>
+<li>Handle errors.</li>
+<li>You have to handle the “end of file” condition (<code>Ctrl+D</code>)</li>
+</ul>
+<p>You don’t have to:</p>
+<ul>
+<li>use the <code>PATH</code></li>
+<li>implement built-ins</li>
+<li>handle special characters : <code>"</code>, <code>'</code>, <code>`</code>, <code>\</code>, <code>*</code>, <code>&amp;</code>, <code>#</code></li>
+<li>be able to move the cursor</li>
+<li>handle commands with arguments</li>
+</ul>
+<p><em><code>execve</code> will be the core part of your Shell, don’t forget to pass the environ to it…</em></p>
+<pre><code>julien@ubuntu:~/shell$ ./shell 
+#cisfun$ ls
+./shell: No such file or directory
+#cisfun$ /bin/ls
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
+#cisfun$ /bin/ls -l
+./shell: No such file or directory
+#cisfun$ ^[[D^[[D^[[D
+./shell: No such file or directory
+#cisfun$ ^[[C^[[C^[[C^[[C
+./shell: No such file or directory
+#cisfun$ exit
+./shell: No such file or directory
+#cisfun$ ^C
+julien@ubuntu:~/shell$ echo "/bin/ls" | ./shell
+barbie_j       env-main.c  exec.c  fork.c  pid.c  ppid.c    prompt   prompt.c  shell.c  stat.c         wait
+env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat test_scripting.sh  wait.c
+#cisfun$ julien@ubuntu:~/shell$
+</code></pre>
+
 
 
 </body>
