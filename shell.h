@@ -70,7 +70,7 @@ char *_strchr(char *str, char c);
 int _strcmp(char *s1, char *s2);
 /* ----------More String prototype-------*/
 char *_strcpy(char *dest, char *source);
-/* ----------Memory prototype------------*/
+/* ----------Memory Prototype------------*/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memset(char *s, char byt, unsigned int n);
 char *_memcpy(char *dest, char *src, unsigned int n);
@@ -98,4 +98,4 @@ int check_builtin(sh_t *data);
 int is_path_form(sh_t *data);
 void is_short_form(sh_t *data);
 int is_builtin(sh_t *data);
-#endif /* SHELL_H for the simpe shell program*/
+#endif /* SHELL_H for the Simple shell program*/
