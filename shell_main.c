@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * main - the main function
+ * main - the Main function
  * Return: Success or Failure
  */
 int main(void)
