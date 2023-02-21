@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _strcat - concatenates two string in a path form
+ * _strcat - Concatenates two string in a path form
  * @first: the first given destination
  * @second: the second given source
  * Return: Success or Failure
