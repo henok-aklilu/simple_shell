@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * exec_line - finds builtins and commands
+ * exec_line - finds builtins and all commands
  *
  * @datash: data relevant (args)
  * Return: 1 on success.
