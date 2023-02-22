@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * read-input-line - reads the input string.
+ * read_line - reads the input string.
  *
  * @i_eof: return value of getline function
  * Return: input string
