@@ -1,48 +1,73 @@
 #include "shell.h"
 
 /**
- * main - the Main function
- * Return: Success or Failure
+ * free_data - frees data structure
+ *
+ * @datash: data structure
+ * Return: no return
  */
-int main(void)
+void free_data(data_shell *datash)
 {
-	sh_t data;
-	int pl;
+	unsigned int i;
 
-	_memset((void *)&data, 0, sizeof(data));
-	signal(SIGINT, signal_handler);
-	while (1)
+	for (i = 0; datash->_environ[i]; i++)
 	{
-		index_cmd(&data);
-		if (read_line(&data) < 0)
-		{
-			if (isatty(STDIN_FILENO))
-				PRINT("\n");
-			break;
-		}
-		if (split_line(&data) < 0)
-		{
-			free_data(&data);
-			continue;
-		}
-		pl = parse_line(&data);
-		if (pl == 0)
-		{
-			free_data(&data);
-			continue;
-		}
-		if (pl < 0)
-		{
-			print_error(&data);
-			continue;
-		}
-		if (process_cmd(&data) < 0)
-		{
-			print_error(&data);
-			break;
-		}
-		free_data(&data);
+		free(datash->_environ[i]);
 	}
-	free_data(&data);
-	exit(EXIT_SUCCESS);
+
+	free(datash->_environ);
+	free(datash->pid);
+}
+
+/**
+ * set_data - Initialize data structure
+ *
+ * @datash: data structure
+ * @av: argument vector
+ * Return: no return
+ */
+void set_data(data_shell *datash, char **av)
+{
+	unsigned int i;
+
+	datash->av = av;
+	datash->input = NULL;
+	datash->args = NULL;
+	datash->status = 0;
+	datash->counter = 1;
+
+	for (i = 0; environ[i]; i++)
+		;
+
+	datash->_environ = malloc(sizeof(char *) * (i + 1));
+
+	for (i = 0; environ[i]; i++)
+	{
+		datash->_environ[i] = _strdup(environ[i]);
+	}
+
+	datash->_environ[i] = NULL;
+	datash->pid = aux_itoa(getpid());
+}
+
+/**
+ * main - Entry point
+ *
+ * @ac: argument count
+ * @av: argument vector
+ *
+ * Return: 0 on success.
+ */
+int main(int ac, char **av)
+{
+	data_shell datash;
+	(void) ac;
+
+	signal(SIGINT, get_sigint);
+	set_data(&datash, av);
+	shell_loop(&datash);
+	free_data(&datash);
+	if (datash.status < 0)
+		return (255);
+	return (datash.status);
 }

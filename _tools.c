@@ -1,120 +1,144 @@
 #include "shell.h"
 
 /**
- * _itoa - convert integer to array
- * @n: the given number
+ * strcat_cd - function that concatenates the message for cd error
  *
- * Return: a pointer to the null terminated string
+ * @datash: data relevant (directory)
+ * @msg: message to print
+ * @error: output message
+ * @ver_str: counter lines
+ * Return: error message
  */
-char *_itoa(unsigned int n)
+char *strcat_cd(data_shell *datash, char *msg, char *error, char *ver_str)
 {
-	int len = 0, i = 0;
-	char *s;
+	char *illegal_flag;
 
-	len = intlen(n);
-	s = malloc(len + 1);
-	if (!s)
+	_strcpy(error, datash->av[0]);
+	_strcat(error, ": ");
+	_strcat(error, ver_str);
+	_strcat(error, ": ");
+	_strcat(error, datash->args[0]);
+	_strcat(error, msg);
+	if (datash->args[1][0] == '-')
+	{
+		illegal_flag = malloc(3);
+		illegal_flag[0] = '-';
+		illegal_flag[1] = datash->args[1][1];
+		illegal_flag[2] = '\0';
+		_strcat(error, illegal_flag);
+		free(illegal_flag);
+	}
+	else
+	{
+		_strcat(error, datash->args[1]);
+	}
+
+	_strcat(error, "\n");
+	_strcat(error, "\0");
+	return (error);
+}
+
+/**
+ * error_get_cd - error message for cd command in get_cd
+ * @datash: data relevant (directory)
+ * Return: Error message
+ */
+char *error_get_cd(data_shell *datash)
+{
+	int length, len_id;
+	char *error, *ver_str, *msg;
+
+	ver_str = aux_itoa(datash->counter);
+	if (datash->args[1][0] == '-')
+	{
+		msg = ": Illegal option ";
+		len_id = 2;
+	}
+	else
+	{
+		msg = ": can't cd to ";
+		len_id = _strlen(datash->args[1]);
+	}
+
+	length = _strlen(datash->av[0]) + _strlen(datash->args[0]);
+	length += _strlen(ver_str) + _strlen(msg) + len_id + 5;
+	error = malloc(sizeof(char) * (length + 1));
+
+	if (error == 0)
+	{
+		free(ver_str);
 		return (NULL);
-	*s = '\0';
-	while (n / 10)
-	{
-		s[i] = (n % 10) + '0';
-		n /= 10;
-		i++;
 	}
-	s[i] = (n % 10) + '0';
-	array_rev(s, len);
-	s[i + 1] = '\0';
-	return (s);
-}
-/**
- * _atoi - converts character to integer
- * @c: the given character
- *
- * Return: An integer
- */
-int _atoi(char *c)
-{
-	unsigned int val = 0;
-	int sign = 1;
 
-	if (c == NULL)
-		return (0);
-	while (*c)
-	{
-		if (*c == '-')
-			sign *= (-1);
-		else
-			val = (val * 10) + (*c - '0');
-		c++;
-	}
-	return (sign * val);
+	error = strcat_cd(datash, msg, error, ver_str);
+
+	free(ver_str);
+
+	return (error);
 }
 
 /**
- * intlen - Determine the number of digit int integer
- * @num: the given number
- *
- * Return: the length of the integer
+ * error_not_found - generic error message for command not found
+ * @datash: data relevant (counter, arguments)
+ * Return: Error message
  */
-int intlen(int num)
+char *error_not_found(data_shell *datash)
 {
-	int len = 0;
+	int length;
+	char *error;
+	char *ver_str;
 
-	while (num != 0)
+	ver_str = aux_itoa(datash->counter);
+	length = _strlen(datash->av[0]) + _strlen(ver_str);
+	length += _strlen(datash->args[0]) + 16;
+	error = malloc(sizeof(char) * (length + 1));
+	if (error == 0)
 	{
-		len++;
-		num /= 10;
+		free(error);
+		free(ver_str);
+		return (NULL);
 	}
-	return (len);
-}
-/**
- * print_error - prints error
- * @data: the data structure pointer
- *
- * Return: (Success) a positive number
- * ------- (Fail) a negative number
- */
-int print_error(sh_t *data)
-{
-	char *idx = _itoa(data->index);
-
-	PRINT("hsh: ");
-	PRINT(idx);
-	PRINT(": ");
-	PRINT(data->args[0]);
-	PRINT(": ");
-	PRINT(data->error_msg);
-	free(idx);
-	return (0);
+	_strcpy(error, datash->av[0]);
+	_strcat(error, ": ");
+	_strcat(error, ver_str);
+	_strcat(error, ": ");
+	_strcat(error, datash->args[0]);
+	_strcat(error, ": not found\n");
+	_strcat(error, "\0");
+	free(ver_str);
+	return (error);
 }
 
 /**
- * write_history - prints error
- * @data: the data structure pointer
+ * error_exit_shell - generic error message for exit in get_exit
+ * @datash: data relevant (counter, arguments)
  *
- * Return: (Success) a positive number
- * ------- (Fail) a negative number
+ * Return: Error message
  */
-int write_history(sh_t *data __attribute__((unused)))
+char *error_exit_shell(data_shell *datash)
 {
-	char *filename = "history";
-	char *line_of_history = "this is a line of history";
-	ssize_t fd, w;
-	int len;
+	int length;
+	char *error;
+	char *ver_str;
 
-	if (!filename)
-		return (-1);
-	fd = open(filename, O_RDWR | O_APPEND);
-	if (fd < 0)
-		return (-1);
-	if (line_of_history)
+	ver_str = aux_itoa(datash->counter);
+	length = _strlen(datash->av[0]) + _strlen(ver_str);
+	length += _strlen(datash->args[0]) + _strlen(datash->args[1]) + 23;
+	error = malloc(sizeof(char) * (length + 1));
+	if (error == 0)
 	{
-		while (line_of_history[len])
-			len++;
-		w = write(fd, line_of_history, len);
-		if (w < 0)
-			return (-1);
+		free(ver_str);
+		return (NULL);
 	}
-	return (1);
+	_strcpy(error, datash->av[0]);
+	_strcat(error, ": ");
+	_strcat(error, ver_str);
+	_strcat(error, ": ");
+	_strcat(error, datash->args[0]);
+	_strcat(error, ": Illegal number: ");
+	_strcat(error, datash->args[1]);
+	_strcat(error, "\n\0");
+	free(ver_str);
+
+	return (error);
 }

@@ -1,122 +1,69 @@
 #include "shell.h"
 
-#define SETOWD(V) (V = _strdup(_getenv("OLDPWD")))
 /**
- * change_dir - changes directory
- * @data: a pointer to the data structure
- * Return: Success or Failure
+ * error_env - error message for env in get_env.
+ * @datash: data relevant (counter, arguments)
+ * Return: error message.
  */
-int change_dir(sh_t *data)
+char *error_env(data_shell *datash)
 {
-	char *home;
+	int length;
+	char *error;
+	char *ver_str;
+	char *msg;
 
-	home = _getenv("HOME");
-	if (data->args[1] == NULL)
+	ver_str = aux_itoa(datash->counter);
+	msg = ": Unable to add/remove from environment\n";
+	length = _strlen(datash->av[0]) + _strlen(ver_str);
+	length += _strlen(datash->args[0]) + _strlen(msg) + 4;
+	error = malloc(sizeof(char) * (length + 1));
+	if (error == 0)
 	{
-		SETOWD(data->oldpwd);
-		if (chdir(home) < 0)
-			return (FAIL);
-		return (SUCCESS);
+		free(error);
+		free(ver_str);
+		return (NULL);
 	}
-	if (_strcmp(data->args[1], "-") == 0)
-	{
-		if (data->oldpwd == 0)
-		{
-			SETOWD(data->oldpwd);
-			if (chdir(home) < 0)
-				return (FAIL);
-		}
-		else
-		{
-			SETOWD(data->oldpwd);
-			if (chdir(data->oldpwd) < 0)
-				return (FAIL);
-		}
-	}
-	else
-	{
-		SETOWD(data->oldpwd);
-		if (chdir(data->args[1]) < 0)
-			return (FAIL);
-	}
-	return (SUCCESS);
-}
-#undef GETCWD
-/**
- * abort_prg - exit the program
- * @data: a pointer to the data structure
- * Return: Success or failure
- */
-int abort_prg(sh_t *data __attribute__((unused)))
-{
-	int code, i = 0;
 
-	if (data->args[1] == NULL)
-	{
-		free_data(data);
-		exit(errno);
-	}
-	while (data->args[1][i])
-	{
-		if (_isalpha(data->args[1][i++]) < 0)
-		{
-			data->error_msg = _strdup("Illegal number\n");
-			return (FAIL);
-		}
-	}
-	code = _atoi(data->args[1]);
-	free_data(data);
-	exit(code);
+	_strcpy(error, datash->av[0]);
+	_strcat(error, ": ");
+	_strcat(error, ver_str);
+	_strcat(error, ": ");
+	_strcat(error, datash->args[0]);
+	_strcat(error, msg);
+	_strcat(error, "\0");
+	free(ver_str);
+
+	return (error);
 }
 /**
- * display_help - display the help menu
- * @data: a pointer to the data structure
- * Return: Success or failure
+ * error_path_126 - error message for path and failure denied permission.
+ * @datash: data relevant (counter, arguments).
+ *
+ * Return: The error string.
  */
-int display_help(sh_t *data)
+char *error_path_126(data_shell *datash)
 {
-	int fd, fw, rd = 1;
-	char c;
+	int length;
+	char *ver_str;
+	char *error;
 
-	fd = open(data->args[1], O_RDONLY);
-	if (fd < 0)
+	ver_str = aux_itoa(datash->counter);
+	length = _strlen(datash->av[0]) + _strlen(ver_str);
+	length += _strlen(datash->args[0]) + 24;
+	error = malloc(sizeof(char) * (length + 1));
+	if (error == 0)
 	{
-		data->error_msg = _strdup("no help topics match\n");
-		return (FAIL);
+		free(error);
+		free(ver_str);
+		return (NULL);
 	}
-	while (rd > 0)
-	{
-		rd = read(fd, &c, 1);
-		fw = write(STDOUT_FILENO, &c, rd);
-		if (fw < 0)
-		{
-			data->error_msg = _strdup("cannot write: permission denied\n");
-			return (FAIL);
-		}
-	}
-	PRINT("\n");
-	return (SUCCESS);
-}
-/**
- * handle_builtin - handle and manage the builtins cmd
- * @data: a pointer to the data structure
- * Return: Success or failure
- */
-int handle_builtin(sh_t *data)
-{
-	blt_t blt[] = {
-		{"exit", abort_prg},
-		{"cd", change_dir},
-		{"help", display_help},
-		{NULL, NULL}
-	};
-	int i = 0;
-
-	while ((blt + i)->cmd)
-	{
-		if (_strcmp(data->args[0], (blt + i)->cmd) == 0)
-			return ((blt + i)->f(data));
-		i++;
-	}
-	return (FAIL);
+	_strcpy(error, datash->av[0]);
+	_strcat(error, ": ");
+	_strcat(error, ver_str);
+	_strcat(error, ": ");
+	_strcat(error, datash->args[0]);
+	_strcat(error, ": Permission denied\n");
+	_strcat(error, "\0");
+	free(ver_str);
+	return (error);
 }

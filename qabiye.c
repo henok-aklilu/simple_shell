@@ -1,86 +1,111 @@
 #include "shell.h"
 
 /**
- * _realloc - reallocates memory block
- * @ptr: pointer to the previous memory
- * @old_size: the old size
- * @new_size: the new size
- * Return: a pointer to the newly allocated memory
+ * add_sep_node_end - adds a separator found at the end
+ * of a sep_list.
+ * @head: head of the linked list.
+ * @sep: separator found (; | &).
+ * Return: address of the head.
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+sep_list *add_sep_node_end(sep_list **head, char sep)
 {
-	void *result;
+	sep_list *new, *temp;
 
-	if (new_size == old_size)
-		return (ptr);
-	if (new_size == 0 && ptr)
-	{
-		free(ptr);
+	new = malloc(sizeof(sep_list));
+	if (new == NULL)
 		return (NULL);
-	}
-	result = malloc(new_size);
-	if (result == NULL)
-		return (NULL);
-	if (ptr == NULL)
+
+	new->separator = sep;
+	new->next = NULL;
+	temp = *head;
+
+	if (temp == NULL)
 	{
-		fill_an_array(result, '\0', new_size);
-		free(ptr);
+		*head = new;
 	}
 	else
 	{
-		_memcpy(result, ptr, old_size);
-		free(ptr);
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new;
 	}
-	return (result);
-}
-/**
- * _memset - fills a memory with constant byte
- * @s: pointer to memory area
- * @n: first n bytes
- * @byt: constant byte
- * Return: A pointer to a character
- */
-char *_memset(char *s, char byt, unsigned int n)
-{
-	unsigned int i;
 
-	for (i = 0; i < n; i++)
-	{
-		s[i] = byt;
-	}
-	return (s);
+	return (*head);
 }
-/**
- * free_data - frees data
- * @data: the data structure
- * Return: Success or failure
- */
-int free_data(sh_t *data)
-{
-	free(data->line);
-	data->line = NULL;
-	free(data->args);
-	data->args = NULL;
-	free(data->cmd);
-	data->cmd = NULL;
-	free(data->error_msg);
-	data->error_msg = NULL;
-	return (0);
-}
-/**
- * _memcpy - cpies memory area
- * @dest: Destination memory area
- * @src: Source memory area
- * @n: Amount of memory byte
- * Return: A pointer to dest
- */
-char *_memcpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int i;
 
-	for (i = 0; i < n; i++)
+/**
+ * free_sep_list - frees a sep_list
+ * @head: head of the linked list.
+ * Return: no return.
+ */
+void free_sep_list(sep_list **head)
+{
+	sep_list *temp;
+	sep_list *curr;
+
+	if (head != NULL)
 	{
-		dest[i] = src[i];
+		curr = *head;
+		while ((temp = curr) != NULL)
+		{
+			curr = curr->next;
+			free(temp);
+		}
+		*head = NULL;
 	}
-	return (dest);
+}
+
+/**
+ * add_line_node_end - adds a command line at the end
+ * of a line_list.
+ * @head: head of the linked list.
+ * @line: command line.
+ * Return: address of the head.
+ */
+line_list *add_line_node_end(line_list **head, char *line)
+{
+	line_list *new, *temp;
+
+	new = malloc(sizeof(line_list));
+	if (new == NULL)
+		return (NULL);
+
+	new->line = line;
+	new->next = NULL;
+	temp = *head;
+
+	if (temp == NULL)
+	{
+		*head = new;
+	}
+	else
+	{
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new;
+	}
+
+	return (*head);
+}
+
+/**
+ * free_line_list - frees a line_list
+ * @head: head of the linked list.
+ * Return: no return.
+ */
+void free_line_list(line_list **head)
+{
+	line_list *temp;
+	line_list *curr;
+
+	if (head != NULL)
+	{
+		curr = *head;
+		while ((temp = curr) != NULL)
+		{
+			curr = curr->next;
+			free(temp);
+		}
+		*head = NULL;
+	}
 }

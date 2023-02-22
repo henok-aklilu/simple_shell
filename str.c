@@ -1,99 +1,129 @@
 #include "shell.h"
 
 /**
- * _strcat - Concatenates two string in a path form
- * @first: the first given destination
- * @second: the second given source
- * Return: Success or Failure
+ * _strdup - duplicates a str in the heap memory.
+ * @s: Type char pointer str
+ * Return: duplicated str
  */
-char *_strcat(char *first, char *second)
+char *_strdup(const char *s)
 {
-	int len1, len2, i = 0, j = 0;
-	char *result;
+	char *new;
+	size_t len;
 
-	len1 = _strlen(first);
-	len2 = _strlen(second);
-	result = malloc((len1 + len2 + 2) * sizeof(char));
-	if (!result)
+	len = _strlen(s);
+	new = malloc(sizeof(char) * (len + 1));
+	if (new == NULL)
 		return (NULL);
-	*result = '\0';
-	while (first[j])
-		result[i++] = first[j++];
-	result[i++] = '/';
-	j = 0;
-	while (second[j])
-		result[i++] = second[j++];
-	result[i] = '\0';
-	return (result);
+	_memcpy(new, s, len + 1);
+	return (new);
 }
+
 /**
- * _strlen - finds the length of a given string
- * @str: the given string
- * Return: Success or Failure
+ * _strlen - Returns the lenght of a string.
+ * @s: Type char pointer
+ * Return: Always 0.
  */
-int _strlen(char *str)
+int _strlen(const char *s)
 {
 	int len;
 
-	for (len = 0; str[len]; len++)
-		;
+	for (len = 0; s[len] != 0; len++)
+	{
+	}
 	return (len);
 }
-/**
- * _strcmp - compare two strings
- * @s1: the first given string
- * @s2: the second given string
- * Return: Success or Failure
- */
-int _strcmp(char *s1, char *s2)
-{
-	int cmp = 0, i;
 
-	if (s1 == NULL || s2 == NULL)
-		return (1);
-	for (i = 0; s1[i]; i++)
+/**
+ * cmp_chars - compare chars of strings
+ * @str: input string.
+ * @delim: delimiter.
+ *
+ * Return: 1 if are equals, 0 if not.
+ */
+int cmp_chars(char str[], const char *delim)
+{
+	unsigned int i, j, k;
+
+	for (i = 0, k = 0; str[i]; i++)
 	{
-		if (s1[i] != s2[i])
+		for (j = 0; delim[j]; j++)
 		{
-			cmp = s1[i] - s2[i];
-			break;
+			if (str[i] == delim[j])
+			{
+				k++;
+				break;
+			}
 		}
-		else
-			continue;
 	}
-	return (cmp);
+	if (i == k)
+		return (1);
+	return (0);
 }
-/**
- * _strchr - locates a character in a given string
- * @str: the given string
- * @c: the given string
- * Return: Success or Fail
- */
-char *_strchr(char *str, char c)
-{
-	char *ptr;
 
-	if (str == NULL)
+/**
+ * _strtok - splits a string by some delimiter.
+ * @str: input string.
+ * @delim: delimiter.
+ *
+ * Return: string splited.
+ */
+char *_strtok(char str[], const char *delim)
+{
+	static char *splitted, *str_end;
+	char *str_start;
+	unsigned int i, bool;
+
+	if (str != NULL)
+	{
+		if (cmp_chars(str, delim))
+			return (NULL);
+		splitted = str; /*Store first address*/
+		i = _strlen(str);
+		str_end = &str[i]; /*Store last address*/
+	}
+	str_start = splitted;
+	if (str_start == str_end) /*Reaching the end*/
 		return (NULL);
-	for (ptr = str; *ptr; ptr++)
-		if (*ptr == c)
-			return (ptr);
-	return (NULL);
+
+	for (bool = 0; *splitted; splitted++)
+	{
+		/*Breaking loop finding the next token*/
+		if (splitted != str_start)
+			if (*splitted && *(splitted - 1) == '\0')
+				break;
+		/*Replacing delimiter for null char*/
+		for (i = 0; delim[i]; i++)
+		{
+			if (*splitted == delim[i])
+			{
+				*splitted = '\0';
+				if (splitted == str_start)
+					str_start++;
+				break;
+			}
+		}
+		if (bool == 0 && *splitted) /*Str != Delim*/
+			bool = 1;
+	}
+	if (bool == 0) /*Str == Delim*/
+		return (NULL);
+	return (str_start);
 }
-/**
- * _strdup - dupicates string
- * @str: the given string
- * Return: Success or Failure
- */
-char *_strdup(char *str)
-{
-	char *dupl;
 
-	if (str == NULL)
-		return (NULL);
-	dupl = malloc(_strlen(str) + 1);
-	if (dupl == NULL)
-		return (NULL);
-	_strcpy(dupl, str);
-	return (dupl);
+/**
+ * _isdigit - defines if string passed is a number
+ *
+ * @s: input string
+ * Return: 1 if string is a number. 0 in other case.
+ */
+int _isdigit(const char *s)
+{
+	unsigned int i;
+
+	for (i = 0; s[i]; i++)
+	{
+		if (s[i] < 48 || s[i] > 57)
+			return (0);
+	}
+	return (1);
 }
