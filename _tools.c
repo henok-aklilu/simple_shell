@@ -9,7 +9,7 @@
  * @ver_str: counter lines
  * Return: error message
  */
-char *strcat_cd(data_shell *datash, char *ms, char *error, char *ver_str)
+char *strcat_cd(data_shell *datash, char *msg, char *error, char *ver_str)
 {
 	char *illegal_flag;
 
