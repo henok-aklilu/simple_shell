@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * bring_line - assigns the line var for get_line
+ * bring_line - assigns the line var for the get_line
  * @lineptr: Buffer that store the input str
  * @buffer: str that is been called to line
  * @n: size of line
