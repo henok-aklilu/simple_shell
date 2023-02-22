@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _strcat - concatenate two strings
+ * _strcat - concatenate strings
  * @dest: char pointer the dest of the copied str
  * @src: const char pointer the source of str
  * Return: the dest
